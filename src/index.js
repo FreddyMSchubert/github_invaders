@@ -16,6 +16,7 @@ async function run() {
   try {
 
     // clone target repo
+    console.log(repoUrl);
     const cloneDir = path.join('/tmp', 'github_defenders_output_repo');
     await simpleGit().clone(repoUrl, cloneDir, {
         '--depth': 1,

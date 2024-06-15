@@ -1,5 +1,8 @@
 # Github Invaders Changelog
 
+#### [0.2.9] - 15.08.2024
+- Added a repourl logging statement, that's it.
+
 #### [0.2.8] - 15.08.2024
 - Fixed incorrect file writing call i generate svg
 
