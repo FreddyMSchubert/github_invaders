@@ -1,6 +1,9 @@
 # Github Invaders Changelog
 
-### [0.1.5] - 15.06.2024
+#### [0.1.6] - 15.06.2024
+- Added config user.name and user.email to index.js script
+
+#### [0.1.5] - 15.06.2024
 - Fixed git object not being initialized
 - removed actions/github require since it's unused
 

@@ -28,6 +28,9 @@ async function run() {
 
     fs.writeFileSync(filePath, newFileContent, 'utf8');
 
+    await git.addConfig('user.name', '🤖github_invaders_bot');
+    await git.addConfig('user.email', 'action@github.com');
+
     await git.add(filePath);
     await git.commit('Automatically update README.md via github_invaders');
     await git.push();
