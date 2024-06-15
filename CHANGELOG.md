@@ -1,5 +1,8 @@
 # Github Invaders Changelog
 
+#### [0.1.4] - 15.06.2024
+- Workflow runs but the file doesn't seem to have changed. Added simple-git package & committed & pushed file from the index.js script.
+
 #### [0.1.3] - 15.06.2024
 - Committed dependencies to repo. This is usually a terrible idea, but is a necessary evil here to make working with actions easier. Maybe I'll do a docker setup at some point.
 

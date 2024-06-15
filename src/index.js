@@ -2,6 +2,7 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 const fs = require('fs');
 const moment = require('moment');
+const simpleGit = require('simple-git');
 
 async function run() {
   try {
@@ -25,7 +26,11 @@ async function run() {
     }
 
     fs.writeFileSync(filePath, newFileContent, 'utf8');
-    core.setOutput('message', 'The file has been updated.');
+    await git.add(filePath);
+    await git.commit('Automatically update README.md via github_invaders');
+    await git.push();
+
+    core.setOutput('message', 'The file has been updated, committed & pushed.');
   } catch (error) {
     core.setFailed(error.message);
   }
