@@ -1,5 +1,8 @@
 # Github Invaders Changelog
 
+#### [0.1.7] - 15.06.2024
+- Reworked index.js logic to not mess up readme file
+
 #### [0.1.6] - 15.06.2024
 - Added config user.name and user.email to index.js script
 

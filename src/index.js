@@ -6,27 +6,21 @@ const simpleGit = require('simple-git');
 async function run() {
   try {
     const git = simpleGit();
-
     const filePath = core.getInput('file-path');
-    const fileContent = fs.readFileSync(filePath, 'utf8');
+    let fileContent = fs.readFileSync(filePath, 'utf8');
     const timestamp = moment().format();
     const startTag = '<!--START_SECTION:github_invaders-->';
     const endTag = '<!--END_SECTION:github_invaders-->';
+    const sectionRegex = new RegExp(`${startTag}[\\s\\S]*?${endTag}`, 'g');
 
     const newText = `${startTag}\nThis text was automatically generated using a workflow from repo github_invaders at ${timestamp}\n${endTag}`;
 
-    let newFileContent;
-    if (fileContent.includes(startTag)) {
-      // Replace existing section
-      const start = fileContent.indexOf(startTag);
-      const end = fileContent.indexOf(endTag) + endTag.length;
-      newFileContent = fileContent.substring(0, start) + newText + fileContent.substring(end);
-    } else {
-      // Append new section
-      newFileContent = fileContent + '\n' + newText;
-    }
+    // Check if the section already exists and replace it
+    if (!fileContent.match(sectionRegex))
+        throw new Error('The target section was not found in the file.');
+    fileContent = fileContent.replace(sectionRegex, newText);
 
-    fs.writeFileSync(filePath, newFileContent, 'utf8');
+    fs.writeFileSync(filePath, fileContent, 'utf8');
 
     await git.addConfig('user.name', '🤖github_invaders_bot');
     await git.addConfig('user.email', 'action@github.com');
