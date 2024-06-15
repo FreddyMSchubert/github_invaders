@@ -1,11 +1,12 @@
 const core = require('@actions/core');
-const github = require('@actions/github');
 const fs = require('fs');
 const moment = require('moment');
 const simpleGit = require('simple-git');
 
 async function run() {
   try {
+    const git = simpleGit();
+
     const filePath = core.getInput('file-path');
     const fileContent = fs.readFileSync(filePath, 'utf8');
     const timestamp = moment().format();
@@ -26,6 +27,7 @@ async function run() {
     }
 
     fs.writeFileSync(filePath, newFileContent, 'utf8');
+
     await git.add(filePath);
     await git.commit('Automatically update README.md via github_invaders');
     await git.push();

@@ -1,5 +1,9 @@
 # Github Invaders Changelog
 
+### [0.1.5] - 15.06.2024
+- Fixed git object not being initialized
+- removed actions/github require since it's unused
+
 #### [0.1.4] - 15.06.2024
 - Workflow runs but the file doesn't seem to have changed. Added simple-git package & committed & pushed file from the index.js script.
 
