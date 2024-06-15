@@ -1,6 +1,9 @@
 # Github Invaders Changelog
 
-### [0.2.1] - 15.06.2024
+#### [0.2.2] - 15.06.2024
+- Fixed svg generation taking too long, making program get out of sync
+
+#### [0.2.1] - 15.06.2024
 - Fixed weird git branching issues, by just deleting and recreating a clean branch every time the script updates
 
 ### [0.2.0] - 15.06.2024

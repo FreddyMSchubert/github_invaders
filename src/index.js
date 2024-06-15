@@ -9,7 +9,7 @@ async function run() {
     const branchName = 'github_defenders_output';
 
     // Generate SVG
-    generateSVG();
+    await generateSVG();
 
     // Git configurations
     await git.addConfig('user.name', '🤖github_invaders_bot');
