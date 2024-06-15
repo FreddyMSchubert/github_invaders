@@ -1,4 +1,4 @@
-const fs = require('fs');
+const { writeFile } = require('fs').promises;
 
 async function generateSVG() {
   const currentTime = new Date().toISOString();
