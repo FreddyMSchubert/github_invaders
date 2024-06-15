@@ -9,7 +9,7 @@ async function generateSVG() {
       </text>
     </svg>
   `;
-  await fs.writeFile('output.svg', svgContent);
+  await writeFile('output.svg', svgContent);
   console.log('SVG has been generated.');
 }
 
