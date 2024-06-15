@@ -1,5 +1,9 @@
 # Github Invaders Changelog
 
+#### [0.2.3] - 15.06.2024
+- Fixed generateSVG using a synchronous file writing method
+- Made svg wider so time is fully readable
+
 #### [0.2.2] - 15.06.2024
 - Fixed svg generation taking too long, making program get out of sync
 
