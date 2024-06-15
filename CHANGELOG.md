@@ -1,5 +1,8 @@
 # Github Invaders Changelog
 
+#### [0.2.8] - 15.08.2024
+- Fixed incorrect file writing call i generate svg
+
 #### [0.2.7] - 15.06.2024
 - Target repo confusion logic fixes
 - Added github token input, it's required
