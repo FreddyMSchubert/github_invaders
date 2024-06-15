@@ -15,20 +15,23 @@ async function run() {
     await git.addConfig('user.name', '🤖github_invaders_bot');
     await git.addConfig('user.email', 'action@github.com');
 
-    // Ensure the branch exists or create it
+    // Reset the branch
+    await git.fetch();
     try {
-      await git.fetch();
-      await git.checkout(branchName);
+      await git.branch(['-D', branchName]);  // Delete if exists
     } catch (error) {
-      await git.checkoutLocalBranch(branchName);
+      console.log(`Branch ${branchName} does not exist or was already deleted.`);
     }
+    await git.checkout(['--orphan', branchName]);  // Create a fresh orphan branch
 
     // Git operations
+    await git.rm(['-r', '.']);  // Clear all files in the directory
+    await git.clean('f', ['-d']);  // Clean untracked files and directories
     await git.add(filePath);
     await git.commit('Update output.svg with current time');
-    await git.push(['-u', 'origin', branchName]);
+    await git.push(['--force', 'origin', branchName]);
 
-    core.setOutput('message', 'SVG file has been updated, committed & pushed.');
+    core.setOutput('message', 'SVG file has been updated, committed & pushed on a clean branch.');
   } catch (error) {
     core.setFailed(error.message);
   }

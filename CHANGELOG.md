@@ -1,5 +1,8 @@
 # Github Invaders Changelog
 
+### [0.2.1] - 15.06.2024
+- Fixed weird git branching issues, by just deleting and recreating a clean branch every time the script updates
+
 ### [0.2.0] - 15.06.2024
 - Removed line update functionality, instead made generate_svg.js file that generates an svg of the current timestamp. This is pushed to a new branch, github_defenders_output, from where it can be referenced by the README on main
 - removed moment package
