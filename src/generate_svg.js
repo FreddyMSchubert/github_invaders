@@ -10,7 +10,7 @@ async function generateSVG(filePath) {
     </svg>
   `;
   console.log('Attempting to generate SVG at:', filePath);
-  await writeFile(filePath, svgContent);
+  await FileSystem.promises.writeFile(filePath, svgContent);
   console.log('SVG has been generated.');
 }
 

@@ -1,5 +1,12 @@
 name: 'Update GitHub Defenders'
 description: 'Updates the GitHub Defenders contributions calendar.'
+inputs:
+  github-token:
+    description: 'GitHub token'
+    required: true
+  repo-url:
+    description: 'Repository URL'
+    required: true
 runs:
   using: 'node12'
   main: 'src/index.js'

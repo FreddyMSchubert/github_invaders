@@ -1,5 +1,9 @@
 # Github Invaders Changelog
 
+#### [0.2.7] - 15.06.2024
+- Target repo confusion logic fixes
+- Added github token input, it's required
+
 #### [0.2.6] - 15.06.2024
 - Various minor tweaks
 
