@@ -1,5 +1,8 @@
 # Github Invaders Changelog
 
+#### [0.2.5] - 15.06.2024
+- Added missing fs import, removed some unnecessary logging
+
 #### [0.2.4] - 15.06.2024
 - Added extensive logging to index.js, as it still can't find the output file
 
