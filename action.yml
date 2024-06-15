@@ -4,6 +4,12 @@ inputs:
   file-path:
     description: 'Path to the file where the text will be appended.'
     required: true
+  github-user-name:
+    description: 'Github user name.'
+    required: true
+  github-token:
+    description: 'Github token used to fetch the contribution calendar.'
+    required: true
 runs:
   using: 'node12'
   main: 'src/index.js'

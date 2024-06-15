@@ -1,5 +1,9 @@
 # Github Invaders Changelog
 
+#### [0.1.2] - 15.06.2024
+- `action.yml` still can't be found. Moved it to root.
+- Added github username & token as inputs
+
 #### [0.1.1] - 15.06.2024
 - Moved index.js into src folder & specified that in test.yml
 - Fixed incorrect action file naming. Apparently it can't be anything but `action.yml`
