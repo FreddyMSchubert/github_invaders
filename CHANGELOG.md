@@ -1,5 +1,8 @@
 # Github Invaders Changelog
 
+#### [0.2.10] - 15.08.2024
+- Updated repository cloning url, including github token
+
 #### [0.2.9] - 15.08.2024
 - Added a repourl logging statement, that's it.
 

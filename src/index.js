@@ -16,11 +16,10 @@ async function run() {
   try {
 
     // clone target repo
-    console.log(repoUrl);
+    const repoWithTokenUrl = repoUrl.replace('https://', `https://x-access-token:${githubToken}@`);
     const cloneDir = path.join('/tmp', 'github_defenders_output_repo');
-    await simpleGit().clone(repoUrl, cloneDir, {
-        '--depth': 1,
-        '--config': `http.extraheader=AUTHORIZATION: bearer ${githubToken}`
+    await simpleGit().clone(repoWithTokenUrl, cloneDir, {
+        '--depth': 1
     });
 
     const targetGit = simpleGit(cloneDir);
