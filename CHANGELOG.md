@@ -1,5 +1,8 @@
 # Github Invaders Changelog
 
+#### [0.2.6] - 15.06.2024
+- Various minor tweaks
+
 #### [0.2.5] - 15.06.2024
 - Added missing fs import, removed some unnecessary logging
 
