@@ -2,13 +2,14 @@ const core = require('@actions/core');
 const simpleGit = require('simple-git');
 const generateSVG = require('./generate_svg');
 const fs = require('fs');
+const path = require('path');
 
 async function run() {
     const git = simpleGit();
-    const filePath = 'output.svg';
+    const filePath = path.join(__dirname, 'output.svg');
     const branchName = 'github_defenders_output';
 
-    await generateSVG();
+    await generateSVG(filePath);
 
   try {
 
@@ -21,7 +22,7 @@ async function run() {
       await git.branch(['-D', branchName]);
       console.log(`Deleted branch ${branchName}`);
     } catch (error) {
-      console.log(`Branch ${branchName} does not exist or was already deleted: ${error}. (That's fine.)`);
+      console.log(`Branch ${branchName} does not exist or was already deleted. (That's fine.) - ${error}`);
     }
 
     // Create fresh orphan branch

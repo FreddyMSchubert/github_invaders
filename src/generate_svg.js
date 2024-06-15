@@ -1,6 +1,6 @@
 const { writeFile } = require('fs').promises;
 
-async function generateSVG() {
+async function generateSVG(filePath) {
   const currentTime = new Date().toISOString();
   const svgContent = `
     <svg width="300" height="100" xmlns="http://www.w3.org/2000/svg">
@@ -9,7 +9,8 @@ async function generateSVG() {
       </text>
     </svg>
   `;
-  await writeFile('output.svg', svgContent);
+  console.log('Attempting to generate SVG at:', filePath);
+  await writeFile(filePath, svgContent);
   console.log('SVG has been generated.');
 }
 
