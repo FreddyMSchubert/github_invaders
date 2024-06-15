@@ -1,5 +1,10 @@
 # Github Invaders Changelog
 
+### [0.2.0] - 15.06.2024
+- Removed line update functionality, instead made generate_svg.js file that generates an svg of the current timestamp. This is pushed to a new branch, github_defenders_output, from where it can be referenced by the README on main
+- removed moment package
+- removed unnecessary action.yml inputs
+
 #### [0.1.7] - 15.06.2024
 - Reworked index.js logic to not mess up readme file
 

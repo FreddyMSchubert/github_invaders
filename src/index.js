@@ -1,35 +1,34 @@
 const core = require('@actions/core');
-const fs = require('fs');
-const moment = require('moment');
 const simpleGit = require('simple-git');
+const generateSVG = require('./generate_svg');
 
 async function run() {
   try {
     const git = simpleGit();
-    const filePath = core.getInput('file-path');
-    let fileContent = fs.readFileSync(filePath, 'utf8');
-    const timestamp = moment().format();
-    const startTag = '<!--START_SECTION:github_invaders-->';
-    const endTag = '<!--END_SECTION:github_invaders-->';
-    const sectionRegex = new RegExp(`${startTag}[\\s\\S]*?${endTag}`, 'g');
+    const filePath = 'output.svg';
+    const branchName = 'github_defenders_output';
 
-    const newText = `${startTag}\nThis text was automatically generated using a workflow from repo github_invaders at ${timestamp}\n${endTag}`;
+    // Generate SVG
+    generateSVG();
 
-    // Check if the section already exists and replace it
-    if (!fileContent.match(sectionRegex))
-        throw new Error('The target section was not found in the file.');
-    fileContent = fileContent.replace(sectionRegex, newText);
-
-    fs.writeFileSync(filePath, fileContent, 'utf8');
-
+    // Git configurations
     await git.addConfig('user.name', '🤖github_invaders_bot');
     await git.addConfig('user.email', 'action@github.com');
 
-    await git.add(filePath);
-    await git.commit('Automatically update README.md via github_invaders');
-    await git.push();
+    // Ensure the branch exists or create it
+    try {
+      await git.fetch();
+      await git.checkout(branchName);
+    } catch (error) {
+      await git.checkoutLocalBranch(branchName);
+    }
 
-    core.setOutput('message', 'The file has been updated, committed & pushed.');
+    // Git operations
+    await git.add(filePath);
+    await git.commit('Update output.svg with current time');
+    await git.push(['-u', 'origin', branchName]);
+
+    core.setOutput('message', 'SVG file has been updated, committed & pushed.');
   } catch (error) {
     core.setFailed(error.message);
   }
