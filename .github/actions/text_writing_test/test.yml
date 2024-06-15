@@ -1,0 +1,9 @@
+name: 'Text writing test'
+description: 'Appends a timestamped message in a specified file for github action testing purposes.'
+inputs:
+  file-path:
+    description: 'Path to the file where the text will be appended.'
+    required: true
+runs:
+  using: 'node12'
+  main: 'index.js'
