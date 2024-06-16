@@ -14,8 +14,12 @@ function run()
 	const repoUrl = core.getInput('repo-url', { required: true });
 
 	const contributions = fetchContributionData(repoUrl, githubToken);
-
-	console.log(contributions);
+	let contribString = getContributionsAsString(contributions);
+	if (!contribString)
+	{
+		return;
+	}
+	console.log(contribString);
 
 	generateSVG(generatedFilePath);
 
@@ -53,6 +57,28 @@ function run()
 	catch (error)
 	{
 		core.setFailed(error.message);
+	}
+}
+
+function getContributionsAsString(contributions)
+{
+	let contributionsString;
+
+	if (contributions && contributions.data && contributions.data.user && contributions.data.user.contributionsCollection)
+	{
+		const calendar = contributions.data.user.contributionsCollection.contributionCalendar;
+		contributionsString += 'Total Contributions Last Year:', calendar.totalContributions;
+		calendar.weeks.forEach(week => {
+			week.contributionDays.forEach(day => {
+				contributionsString += `Date: ${day.date}, Contributions: ${day.contributionCount}`;
+			});
+		});
+		return contributionsString;
+	}
+	else
+	{
+		console.error('No contribution data available or data is improperly structured.');
+		return null;
 	}
 }
 

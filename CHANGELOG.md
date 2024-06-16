@@ -2,6 +2,9 @@
 
 > 3 - Fetching & displaying contribution data
 
+#### [0.3.1] - 16.06.2024
+- Added proper logging function of contribution data, to check whether received data is correct
+
 ### [0.3.0] - 16.06.2024
 - Theoretical synchoronous contribution data fetching, which for now just gets logged
 
