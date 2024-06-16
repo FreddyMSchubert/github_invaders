@@ -1,6 +1,6 @@
 {
   "name": "github_invaders",
-  "version": "0.2.0",
+  "version": "0.2.13",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -8,8 +8,7 @@
   },
   "dependencies": {
     "@actions/core": "^1.2.6",
-    "@actions/github": "^4.0.0",
-    "simple-git": "^3.25.0"
+    "@actions/github": "^4.0.0"
   },
   "keywords": [],
   "author": "FreddyMSchubert",

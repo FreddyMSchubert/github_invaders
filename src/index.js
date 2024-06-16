@@ -21,11 +21,11 @@ function run()
 		const cloneDir = path.join('/tmp', 'github_defenders_output_repo');
 		if (!fs.existsSync(cloneDir))
 		{
-			fs.mkdirSync(cloneDir);
+			fs.mkdirSync(cloneDir, { recursive: true });
 		}
 		else
 		{
-			execSync(`rm -rf ${cloneDir}/* ${cloneDir}/.*`);
+			execSync(`find ${cloneDir} -mindepth 1 -delete`);
 		}
 		execSync(`git clone --depth 1 ${repoWithTokenUrl} ${cloneDir}`);
 
@@ -34,16 +34,8 @@ function run()
 		execSync(`git -C ${cloneDir} config user.email "this_email_doesnt_work@noreply.com"`);
 
 		// Create a clean target branch
-		const branches = execSync(`git -C ${cloneDir} branch --list`).toString();
-		if (branches.includes(targetBranchName))
-		{
-			execSync(`git -C ${cloneDir} checkout ${targetBranchName}`);
-			execSync(`git -C ${cloneDir} rm -rf .`);
-		}
-		else
-		{
-			execSync(`git -C ${cloneDir} checkout --orphan ${targetBranchName}`);
-		}
+		execSync(`git -C ${cloneDir} checkout ${targetBranchName} || git -C ${cloneDir} checkout --orphan ${targetBranchName}`);
+		execSync(`git -C ${cloneDir} rm -rf .`);
 
 		// Copy SVG & commit
 		fs.copyFileSync(generatedFilePath, path.join(cloneDir, svgFileName));

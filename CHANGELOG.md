@@ -1,5 +1,9 @@
 # Github Invaders Changelog
 
+#### [0.2.13] - 16.06.2024
+- index.js efficiency improvements, wider svg
+- Removed simplegit package, packages reload
+
 #### [0.2.12] - 16.06.2024
 - Replaced simplegit with a more manual solution, using execSync and running strings as shell commands, because simplegit only works async.
 
