@@ -1,5 +1,12 @@
 # Github Invaders Changelog
 
+> 3 - Fetching & displaying contribution data
+
+### [0.3.0] - 16.06.2024
+- Theoretical synchoronous contribution data fetching, which for now just gets logged
+
+> 2 - Generic SVG pushed to seperate branch
+
 #### [0.2.13] - 16.06.2024
 - index.js efficiency improvements, wider svg
 - Removed simplegit package, packages reload
@@ -47,6 +54,8 @@
 - Removed line update functionality, instead made generate_svg.js file that generates an svg of the current timestamp. This is pushed to a new branch, github_defenders_output, from where it can be referenced by the README on main
 - removed moment package
 - removed unnecessary action.yml inputs
+
+> 1 - Basic text update workflow
 
 #### [0.1.7] - 15.06.2024
 - Reworked index.js logic to not mess up readme file

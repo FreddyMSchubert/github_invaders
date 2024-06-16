@@ -3,6 +3,7 @@ const { execSync } = require('child_process');
 const generateSVG = require('./generate_svg');
 const fs = require('fs');
 const path = require('path');
+const request = require('sync-request');
 
 function run()
 {
@@ -11,6 +12,10 @@ function run()
 	const generatedFilePath = path.join(__dirname, svgFileName);
 	const targetBranchName = 'github_defenders_output';
 	const repoUrl = core.getInput('repo-url', { required: true });
+
+	const contributions = fetchContributionData(repoUrl, githubToken);
+
+	console.log(contributions);
 
 	generateSVG(generatedFilePath);
 
@@ -48,6 +53,57 @@ function run()
 	catch (error)
 	{
 		core.setFailed(error.message);
+	}
+}
+
+function extractOwner(repoUrl)
+{
+	const match = repoUrl.match(/https:\/\/github\.com\/([^\/]+)\/[^\/]+/);
+	return match ? match[1] : null;
+}
+
+function fetchContributionData(repoUrl, token)
+{
+	const owner = extractOwner(repoUrl);
+	const endpoint = 'https://api.github.com/graphql';
+	const query = JSON.stringify({
+		query: `
+			query contributionData($login: String!) {
+				user(login: $login) {
+					contributionsCollection(from: "${new Date(new Date().setFullYear(new Date().getFullYear() - 1)).toISOString()}", to: "${new Date().toISOString()}") {
+						contributionCalendar {
+							totalContributions
+							weeks {
+								contributionDays {
+									date
+									contributionCount
+								}
+							}
+						}
+					}
+				}
+			}
+		`,
+		variables: { login: owner }
+	});
+
+	const headers = {
+		'Authorization': `Bearer ${token}`,
+		'User-Agent': 'Node.js'
+	};
+
+	const res = request('POST', endpoint, {
+		headers: headers,
+		body: query
+	});
+
+	if (res.statusCode === 200)
+	{
+		return JSON.parse(res.getBody('utf8'));
+	}
+	else
+	{
+		throw new Error(`GitHub API responded with status code: ${res.statusCode}`);
 	}
 }
 
