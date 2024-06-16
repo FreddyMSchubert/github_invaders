@@ -1,5 +1,5 @@
 const core = require('@actions/core');
-const simpleGit = require('simple-git');
+const { execSync } = require('child_process');
 const generateSVG = require('./generate_svg');
 const fs = require('fs');
 const path = require('path');
@@ -19,33 +19,37 @@ function run()
 		// clone target repo
 		const repoWithTokenUrl = repoUrl.replace('https://', `https://x-access-token:${githubToken}@`);
 		const cloneDir = path.join('/tmp', 'github_defenders_output_repo');
-		simpleGit().clone(repoWithTokenUrl, cloneDir, { '--depth': 1 });
-
-		const targetGit = simpleGit(cloneDir);
-		targetGit.addConfig('user.name', 'GitHub Action Bot');
-		targetGit.addConfig('user.email', 'action@github.com');
-
-		const branchSummary = targetGit.branch();
-		if (branchSummary.all.includes(targetBranchName))
+		if (!fs.existsSync(cloneDir))
 		{
-			// Checkout and clean up the existing branch
-			targetGit.checkout(targetBranchName);
-			targetGit.raw(['rm', '-rf', '.']);
-			targetGit.clean('f', ['-dx']);
-			targetGit.raw(['commit', '--allow-empty', '-m', 'Clean up branch']);
+			fs.mkdirSync(cloneDir);
 		}
 		else
 		{
-			// Create as an orphan if it does not exist
-			targetGit.checkout(['--orphan', targetBranchName]);
+			execSync(`rm -rf ${cloneDir}/* ${cloneDir}/.*`);
+		}
+		execSync(`git clone --depth 1 ${repoWithTokenUrl} ${cloneDir}`);
+
+		// git config
+		execSync(`git -C ${cloneDir} config user.name "🤖 GitHub Invaders Bot"`);
+		execSync(`git -C ${cloneDir} config user.email "this_email_doesnt_work@noreply.com"`);
+
+		// Create a clean target branch
+		const branches = execSync(`git -C ${cloneDir} branch --list`).toString();
+		if (branches.includes(targetBranchName))
+		{
+			execSync(`git -C ${cloneDir} checkout ${targetBranchName}`);
+			execSync(`git -C ${cloneDir} rm -rf .`);
+		}
+		else
+		{
+			execSync(`git -C ${cloneDir} checkout --orphan ${targetBranchName}`);
 		}
 
-		// Copy the generated SVG to the root of the cloned repo
+		// Copy SVG & commit
 		fs.copyFileSync(generatedFilePath, path.join(cloneDir, svgFileName));
-
-		targetGit.add(svgFileName);
-		targetGit.commit('Update output.svg with current time');
-		targetGit.push(['--force', 'origin', targetBranchName]);
+		execSync(`git -C ${cloneDir} add ${svgFileName}`);
+		execSync(`git -C ${cloneDir} commit -m "Update output.svg with at ${new Date().toISOString()}"`);
+		execSync(`git -C ${cloneDir} push --force origin ${targetBranchName}`);
 
 		core.setOutput('message', 'SVG file has been updated, committed & pushed on a clean branch.');
 	}

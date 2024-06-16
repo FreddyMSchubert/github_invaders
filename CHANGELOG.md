@@ -1,6 +1,9 @@
 # Github Invaders Changelog
 
-#### [0.2.11]- 16.06.2024
+#### [0.2.12] - 16.06.2024
+- Replaced simplegit with a more manual solution, using execSync and running strings as shell commands, because simplegit only works async.
+
+#### [0.2.11] - 16.06.2024
 - Removed async / await functionality for simplicity
 - Tab / Spaces situation cleanup
 
